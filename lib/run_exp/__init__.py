@@ -1,1 +1,1 @@
-__all__ = ["standard"]
+__all__ = ["standard", "classif_autoencoder"]
