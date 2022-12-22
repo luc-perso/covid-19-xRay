@@ -79,7 +79,8 @@ def run_experiment(model, encoder_input, decoder_output,
     print(f"Test accuracy: {round(accuracy * 100, 2)}%")
 
     y_pred = model.predict(ds_valid.batch(batch_size), batch_size=batch_size)
-    y_valid = ds_valid.map(lambda img, label: label).numpy()
+    y_valid = ds_valid.map(lambda img, label: label)
+    y_valid = np.stack(list(y_valid))
 
     y_pred_pd = pd.DataFrame(y_pred, columns=[0, 1, 2]).idxmax(1)
     y_valid_pd = pd.DataFrame(y_valid, columns=[0, 1, 2]).idxmax(1)
