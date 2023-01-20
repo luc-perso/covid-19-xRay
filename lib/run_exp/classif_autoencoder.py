@@ -21,7 +21,7 @@ def run_experiment(model, encoder_input, decoder_output,
                   batch_size=32, num_epochs=100,
                   learning_rate=1e-3, weight_decay=1e-4,
                   lam_recon=10,
-                  output_path=None,
+                  output_path=None, prefix='cnn',
                   from_logits=False, label_smoothing=0.1):
     optimizer = tfa.optimizers.AdamW(
         learning_rate=learning_rate,
@@ -41,12 +41,12 @@ def run_experiment(model, encoder_input, decoder_output,
     )
 
     # callbacks
-    log_filename = os.path.join(output_path, 'log.csv')
+    log_filename = os.path.join(output_path, prefix + '_log.csv')
     ckpt_path = os.path.join(output_path, 'ckpt')
     if not os.path.exists(ckpt_path):
         os.makedirs(ckpt_path, exist_ok=True)
     # checkpoint_filename = os.path.join(ckpt_path, 'weights.{epoch:02d}-{val_loss:.2f}.hdf5')
-    checkpoint_filename = os.path.join(ckpt_path, 'weights.hdf5')
+    checkpoint_filename = os.path.join(ckpt_path, prefix + '_weights.hdf5')
 
     log = keras.callbacks.CSVLogger(log_filename)
     checkpoint_callback = keras.callbacks.ModelCheckpoint(
