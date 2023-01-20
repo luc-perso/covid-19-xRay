@@ -70,7 +70,7 @@ def run_experiment(model, encoder_input, decoder_output,
         x=ds_shuffle.batch(batch_size),
         batch_size=batch_size,
         epochs=num_epochs,
-        validation_data=ds_test.batch(batch_size),
+        validation_data=ds_valid.batch(batch_size),
         callbacks=[log, checkpoint_callback, custom_early_stopping],
     )
 
@@ -78,14 +78,14 @@ def run_experiment(model, encoder_input, decoder_output,
     _, accuracy = model.evaluate(ds_valid.batch(batch_size))
     print(f"Test accuracy: {round(accuracy * 100, 2)}%")
 
-    y_pred = model.predict(ds_valid.batch(batch_size), batch_size=batch_size)
-    y_valid = ds_valid.map(lambda img, label: label)
-    y_valid = np.stack(list(y_valid))
+    y_pred = model.predict(ds_test.batch(batch_size), batch_size=batch_size)
+    y_test = ds_test.map(lambda img, label: label)
+    y_test = np.stack(list(y_test))
 
     y_pred_pd = pd.DataFrame(y_pred, columns=[0, 1, 2]).idxmax(1)
-    y_valid_pd = pd.DataFrame(y_valid, columns=[0, 1, 2]).idxmax(1)
+    y_test_pd = pd.DataFrame(y_test, columns=[0, 1, 2]).idxmax(1)
 
-    conf_mat = pd.crosstab(y_valid_pd, y_pred_pd,
+    conf_mat = pd.crosstab(y_test_pd, y_pred_pd,
                             colnames=['Predicted'],
                             rownames=['Real'],
                             )
