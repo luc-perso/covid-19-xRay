@@ -75,7 +75,7 @@ def run_experiment(model, encoder_input, decoder_output,
     )
 
     model.load_weights(checkpoint_filename)
-    _, accuracy = model.evaluate(ds_valid.batch(batch_size))
+    _, accuracy = model.evaluate(ds_test.batch(batch_size))
     print(f"Test accuracy: {round(accuracy * 100, 2)}%")
 
     y_pred = model.predict(ds_test.batch(batch_size), batch_size=batch_size)
