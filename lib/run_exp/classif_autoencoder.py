@@ -16,7 +16,7 @@ def reconstruction_loss(encoder_input, decoder_output):
 
 
 def run_experiment(model, encoder_input, decoder_output,
-                  ds_train, ds_test, ds_valid,
+                  ds_train, ds_valid, ds_test,
                   batch_size=32, num_epochs=100,
                   learning_rate=1e-3, weight_decay=1e-4,
                   lam_recon=10,

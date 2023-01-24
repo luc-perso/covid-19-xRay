@@ -4,7 +4,7 @@ from tensorflow import keras
 from run_exp.test import test_model
 
 def run_experiment(model,
-                  ds_train, ds_test, ds_valid,
+                  ds_train, ds_valid, ds_test,
                   batch_size=32, num_epochs=100,
                   learning_rate=1e-3, weight_decay=1e-4,
                   from_logits=False, label_smoothing=0.1,
