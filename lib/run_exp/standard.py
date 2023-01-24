@@ -1,9 +1,7 @@
 import os
-import numpy as np
-import pandas as pd
 import tensorflow_addons as tfa
 from tensorflow import keras
-
+import test
 
 def run_experiment(model,
                   ds_train, ds_test, ds_valid,
@@ -58,19 +56,6 @@ def run_experiment(model,
     )
 
     model.load_weights(checkpoint_filename)
-    _, accuracy = model.evaluate(ds_test.batch(batch_size))
-    print(f"Test accuracy: {round(accuracy * 100, 2)}%")
-
-    y_pred = model.predict(ds_test.batch(batch_size), batch_size=batch_size)
-    y_test = ds_test.map(lambda img, label: label)
-    y_test = np.stack(list(y_test))
-
-    y_pred_pd = pd.DataFrame(y_pred, columns=[0, 1, 2]).idxmax(1)
-    y_test_pd = pd.DataFrame(y_test, columns=[0, 1, 2]).idxmax(1)
-
-    conf_mat = pd.crosstab(y_test_pd, y_pred_pd,
-                            colnames=['Predicted'],
-                            rownames=['Real'],
-                            )
+    conf_mat = test.test_model(model, ds_test, batch_size)
 
     return history, conf_mat

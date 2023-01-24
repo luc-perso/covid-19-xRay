@@ -1,1 +1,1 @@
-__all__ = ["standard", "classif_autoencoder"]
+__all__ = ["test", "standard", "classif_autoencoder"]
