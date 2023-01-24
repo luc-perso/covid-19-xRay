@@ -1,7 +1,7 @@
 import os
 import tensorflow_addons as tfa
 from tensorflow import keras
-import test
+from run_exp.test import test_model
 
 # Define custom loss
 def reconstruction_loss(encoder_input, decoder_output):
@@ -75,6 +75,6 @@ def run_experiment(model, encoder_input, decoder_output,
     )
 
     model.load_weights(checkpoint_filename)
-    conf_mat = test.test_model(model, ds_test, batch_size)
+    conf_mat = test_model(model, ds_test, batch_size)
 
     return history, conf_mat
