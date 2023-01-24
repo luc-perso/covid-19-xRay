@@ -7,8 +7,9 @@ def run_experiment(model,
                   ds_train, ds_test, ds_valid,
                   batch_size=32, num_epochs=100,
                   learning_rate=1e-3, weight_decay=1e-4,
-                  output_path=None, prefix='transformer',
-                  from_logits=False, label_smoothing=0.1):
+                  from_logits=False, label_smoothing=0.1,
+                  patience=5, min_delta=0.005,
+                  output_path=None, prefix='transformer'):
     optimizer = tfa.optimizers.AdamW(
         learning_rate=learning_rate, weight_decay=weight_decay
     )
@@ -40,8 +41,8 @@ def run_experiment(model,
     )
     custom_early_stopping = keras.callbacks.EarlyStopping(
         monitor='val_accuracy',
-        patience=3,
-        min_delta=0.005,
+        patience=patience,
+        min_delta=min_delta,
         mode='max'
     )
 
