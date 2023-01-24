@@ -22,8 +22,11 @@ def test_model(model, ds_test, batch_size):
   return conf_mat
 
 
-def compile_test_model(model, ds_test, batch_size):
-  model.compile(metrics=[keras.metrics.CategoricalAccuracy(name="accuracy")])
+def compile_test_model(model, ds_test, batch_size, from_logits=False, label_smoothing=0.1):
+  model.compile(
+    loss=keras.losses.CategoricalCrossentropy(from_logits=from_logits, label_smoothing=label_smoothing),
+    metrics=[keras.metrics.CategoricalAccuracy(name="accuracy")]
+  )
   conf_mat = test_model(model, ds_test, batch_size)
 
   return conf_mat
