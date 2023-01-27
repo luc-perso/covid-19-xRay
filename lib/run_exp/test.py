@@ -3,10 +3,14 @@ import pandas as pd
 from tensorflow import keras
 
 
-def test_model(model, ds_test, batch_size):
+def test_accuracy(model, ds_test, batch_size):
   _, accuracy = model.evaluate(ds_test.batch(batch_size))
   print(f"Test accuracy: {round(accuracy * 100, 2)}%")
 
+  return accuracy
+
+
+def test_conf_mat(model, ds_test, batch_size):
   y_pred = model.predict(ds_test.batch(batch_size), batch_size=batch_size)
   y_test = ds_test.map(lambda img, label: label)
   y_test = np.stack(list(y_test))
@@ -18,7 +22,14 @@ def test_model(model, ds_test, batch_size):
                           colnames=['Predicted'],
                           rownames=['Real'],
                           )
+  return conf_mat
 
+
+def test_model(model, ds_test, batch_size):
+  test_accuracy(model, ds_test, batch_size)
+
+  conf_mat = test_conf_mat(model, ds_test, batch_size)
+  
   return conf_mat
 
 
