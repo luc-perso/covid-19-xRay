@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from tensorflow import keras
+from sklearn import metrics
 
 
 def test_accuracy(model, ds_test, batch_size):
@@ -22,6 +23,9 @@ def test_conf_mat(model, ds_test, batch_size):
                           colnames=['Predicted'],
                           rownames=['Real'],
                           )
+
+  print(metrics.classification_report(y_test_pd, y_pred_pd))
+
   return conf_mat
 
 
