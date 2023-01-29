@@ -46,7 +46,28 @@ def build_data_paths():
     """
     output: data_path dataFrame
         * with index= ['db_name', 'ds_name', 'desease_name', 'data_type_name']
-        * path: folders hierarchical string path 
+          for database name, dataset name, desease or label name and data type name
+        * path: folders hierarchical string path
+
+    access to the desire paths with:
+    idx = pd.IndexSlice
+    work_index = idx[db_name_idx, ds_name_idx, desease_name_idx, data_type_name_idx]
+    work_paths = data_paths['path'].loc[work_index]
+
+        * db_name_idx values: lung_name and infection_name
+        * ds_name_idx values: train_name, valid_name,and test_name
+        * desease_name_iidx values: normal_name, covid_name and no_covid_name
+        * data_type_name_idx values: images_name, lung_mask_name and infection_mask_name
+    
+    example:
+    work_index = idx[[lung_name, infection_name],:,:,[images_name]]
+    and
+    work_index = idx[:,:,:,[images_name]]
+    Give the indexes to access all the repertories in data_paths for:
+        * lung and infection databases,
+        * train valid and test dataset
+        * normal, covid, n-covid labels / deseases
+        * images repertories
     """
 
     # dataframe structure to link code names and real names
