@@ -9,7 +9,8 @@ def run_experiment(model,
                   learning_rate=1e-3, weight_decay=1e-4,
                   from_logits=False, label_smoothing=0.1,
                   patience=5, min_delta=0.005,
-                  output_path=None, prefix='transformer'):
+                  log_path=None, ckpt_path=None,
+                  prefix='transformer'):
     optimizer = tfa.optimizers.AdamW(
         learning_rate=learning_rate, weight_decay=weight_decay
     )
@@ -23,11 +24,14 @@ def run_experiment(model,
         ],
     )
 
-    # callbacks
-    log_filename = os.path.join(output_path, prefix + '_log.csv')
-    ckpt_path = os.path.join(output_path, 'ckpt')
+    # check dir
     if not os.path.exists(ckpt_path):
         os.makedirs(ckpt_path, exist_ok=True)
+    if not os.path.exists(log_path):
+        os.makedirs(log_path, exist_ok=True)
+
+    # callbacks
+    log_filename = os.path.join(log_path, prefix + '_log.csv')
     # checkpoint_filename = os.path.join(ckpt_path, 'weights.{epoch:02d}-{val_loss:.2f}.hdf5')
     checkpoint_filename = os.path.join(ckpt_path, prefix + '_weights.hdf5')
 
