@@ -1,9 +1,11 @@
 import numpy as np
 import pandas as pd
+import tensorflow as tf
 from tensorflow import keras
 from sklearn import metrics
 
 
+@tf.autograph.experimental.do_not_convert
 def test_accuracy(y_test_pd, y_pred_pd):
   accuracy = metrics.accuracy_score(y_test_pd, y_pred_pd)
   
@@ -30,6 +32,7 @@ def test_conf_mat(y_test_pd, y_pred_pd):
   return conf_mat
 
 
+@tf.autograph.experimental.do_not_convert
 def test_report(y_test_pd, y_pred_pd):
   report = metrics.classification_report(y_test_pd, y_pred_pd)
 
