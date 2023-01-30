@@ -1,7 +1,6 @@
 import os
 import tensorflow_addons as tfa
 from tensorflow import keras
-from run_exp.test import test_model
 
 def run_experiment(model,
                   ds_train, ds_valid, ds_test,
@@ -56,7 +55,4 @@ def run_experiment(model,
         callbacks=[log, checkpoint_callback, custom_early_stopping],
     )
 
-    model.load_weights(checkpoint_filename)
-    conf_mat = test_model(model, ds_test, batch_size)
-
-    return history, conf_mat
+    return history
