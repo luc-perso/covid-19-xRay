@@ -1,6 +1,7 @@
 import numpy as np
 import tensorflow as tf
 import cv2
+import gc
 
 # Create function to apply a grey patch on an image
 def apply_grey_patch(image, top_left_x, top_left_y, patch_size):
@@ -13,14 +14,17 @@ def occultation(img, model, patch_size=32, sub_samp_for_step=4, pred_index=None)
     sensitivity_map = np.zeros((img.shape[0], img.shape[1]))
     count_map = np.zeros((img.shape[0], img.shape[1]))
 
+    # define prediction
+    if pred_index is None:
+        predictions = model.predict(np.array([img]), verbose=False)[0]
+        pred_index = tf.argmax(predictions)
+
     # Iterate the patch over the image
     i = 0
     for top_left_x in range(0, img.shape[0], patch_size // sub_samp_for_step):
         for top_left_y in range(0, img.shape[1], patch_size // sub_samp_for_step):
             patched_image = apply_grey_patch(img, top_left_x, top_left_y, patch_size)
             predictions = model.predict(np.array([patched_image]), verbose=False)[0]
-            if pred_index is None:
-                pred_index = tf.argmax(predictions)
             confidence = predictions[pred_index]
             
             # Save confidence for this specific patched image in map
@@ -33,6 +37,7 @@ def occultation(img, model, patch_size=32, sub_samp_for_step=4, pred_index=None)
             count_map[top_left_y:top_left_y + patch_size, top_left_x:top_left_x + patch_size] += 1
             # force free memory
             patched_image = None
+        gc.collect()
 
         print(str(i) + ',', end='')
         i += 1
