@@ -59,6 +59,7 @@ def occultation_list(
         img = tf.keras.preprocessing.image.img_to_array(img)
 
         print(str(i) + ':', end='')
+        i += 1
         occ = occultation(
             img, model,
             patch_size=patch_size,
