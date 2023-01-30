@@ -25,14 +25,10 @@ def occultation(img, model, patch_size=32, sub_samp_for_step=4, pred_index=None)
         for top_left_y in range(0, img.shape[1], patch_size // sub_samp_for_step):
             patched_image = apply_grey_patch(img, top_left_x, top_left_y, patch_size)
 
-            # list_for_predict = [patched_image]
-            # patched_image_for_predict = np.array(list_for_predict)
-            # predictions = model.predict(patched_image_for_predict, verbose=False)[0]
+            patched_image = np.expand_dims(patched_image, axis=0)
+            predictions = model.predict(patched_image, verbose=False)[0]
+            confidence = predictions[pred_index]
 
-            # confidence = predictions[pred_index]
-
-            confidence = 0.
-            
             # Save confidence for this specific patched image in map
             sensitivity_map[top_left_y:top_left_y + patch_size, top_left_x:top_left_x + patch_size] \
             = (sensitivity_map[top_left_y:top_left_y + patch_size, top_left_x:top_left_x + patch_size] \
