@@ -26,15 +26,15 @@ def test_conf_mat(model, ds_test, batch_size):
 
   print(metrics.classification_report(y_test_pd, y_pred_pd))
 
-  return conf_mat
+  return conf_mat, y_test_pd, y_pred_pd
 
 
 def test_model(model, ds_test, batch_size):
   test_accuracy(model, ds_test, batch_size)
 
-  conf_mat = test_conf_mat(model, ds_test, batch_size)
+  conf_mat, y_test_pd, y_pred_pd = test_conf_mat(model, ds_test, batch_size)
   
-  return conf_mat
+  return conf_mat, y_test_pd, y_pred_pd
 
 
 def compile_test_model(model, ds_test, batch_size, from_logits=False, label_smoothing=0.1):
@@ -42,6 +42,6 @@ def compile_test_model(model, ds_test, batch_size, from_logits=False, label_smoo
     loss=keras.losses.CategoricalCrossentropy(from_logits=from_logits, label_smoothing=label_smoothing),
     metrics=[keras.metrics.CategoricalAccuracy(name="accuracy")]
   )
-  conf_mat = test_model(model, ds_test, batch_size)
+  conf_mat, y_test_pd, y_pred_pd = test_model(model, ds_test, batch_size)
 
-  return conf_mat
+  return conf_mat, y_test_pd, y_pred_pd
