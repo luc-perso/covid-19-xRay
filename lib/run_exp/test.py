@@ -39,6 +39,7 @@ def test_report(y_test_pd, y_pred_pd):
   return report
 
 
+@tf.autograph.experimental.do_not_convert
 def test_model(model, ds_test, batch_size):
   y_test_pd, y_pred_pd = test_prediction(model, ds_test, batch_size)
 
@@ -49,6 +50,7 @@ def test_model(model, ds_test, batch_size):
   return y_test_pd, y_pred_pd, accuracy, conf_mat, report
 
 
+@tf.autograph.experimental.do_not_convert
 def compile_test_model(model, ds_test, batch_size, from_logits=False, label_smoothing=0.1):
   model.compile(
     loss=keras.losses.CategoricalCrossentropy(from_logits=from_logits, label_smoothing=label_smoothing),
