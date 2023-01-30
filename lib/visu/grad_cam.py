@@ -7,7 +7,7 @@ def grad_cam(img, grad_model, resize_shape=None, pred_index=None):
   image_size = img.shape[0]
 
   with tf.GradientTape() as tape:
-    conv_outputs, predictions = grad_model(np.array([img]), training=False)
+    conv_outputs, predictions = grad_model(np.expand_dims(img, axis=0), training=False)
     if pred_index is None:
       pred_index = tf.argmax(predictions[0])
     loss = predictions[:, pred_index]
