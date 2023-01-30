@@ -26,7 +26,8 @@ def occultation(img, model, patch_size=32, sub_samp_for_step=4, pred_index=None)
             patched_image = apply_grey_patch(img, top_left_x, top_left_y, patch_size)
 
             patched_image = np.expand_dims(patched_image, axis=0)
-            predictions = model.predict(patched_image, verbose=False)[0]
+            # predictions = model.predict(patched_image, verbose=False)[0]
+            predictions = model(patched_image, training=False)
             confidence = predictions[pred_index]
 
             # Save confidence for this specific patched image in map
