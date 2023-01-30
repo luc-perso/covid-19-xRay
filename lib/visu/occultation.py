@@ -31,6 +31,9 @@ def occultation(img, model, patch_size=32, sub_samp_for_step=4, pred_index=None)
             / (count_map[top_left_y:top_left_y + patch_size, top_left_x:top_left_x + patch_size] + 1)
 
             count_map[top_left_y:top_left_y + patch_size, top_left_x:top_left_x + patch_size] += 1
+            # force free memory
+            patched_image = None
+
         print(str(i) + ',', end='')
         i += 1
     print('')       
