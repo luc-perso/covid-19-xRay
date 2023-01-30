@@ -10,6 +10,7 @@ def apply_grey_patch(image, top_left_x, top_left_y, patch_size):
 
     return patched_image
 
+
 def occultation(img, model, patch_size=32, sub_samp_for_step=4, pred_index=None):
     sensitivity_map = np.zeros((img.shape[0], img.shape[1]))
     count_map = np.zeros((img.shape[0], img.shape[1]))
@@ -35,18 +36,26 @@ def occultation(img, model, patch_size=32, sub_samp_for_step=4, pred_index=None)
             / (count_map[top_left_y:top_left_y + patch_size, top_left_x:top_left_x + patch_size] + 1)
 
             count_map[top_left_y:top_left_y + patch_size, top_left_x:top_left_x + patch_size] += 1
+
             # force free memory
             patched_image = None
-        gc.collect()
+            predictions = None
+            gc.collect()
+
 
         print(str(i) + ',', end='')
         i += 1
     print('')       
+
           
     heatmap = 1. - (sensitivity_map - sensitivity_map.min()) / (sensitivity_map.max() - sensitivity_map.min())
     # heatmap = 1. - sensitivity_map / sensitivity_map.max()
     sens = cv2.applyColorMap(np.uint8(255*heatmap), cv2.COLORMAP_JET)
     occ = cv2.addWeighted(cv2.cvtColor(img.astype('uint8'), cv2.COLOR_RGB2BGR), 0.5, sens, 0.5, 0)
+
+    heatmap = None
+    sens = None
+    gc.collect()
 
     return occ
 
