@@ -4,7 +4,7 @@ import cv2
 
 # Create function to apply a grey patch on an image
 def apply_grey_patch(image, top_left_x, top_left_y, patch_size):
-    patched_image = image + 0
+    patched_image = image.copy()
     patched_image[top_left_y:top_left_y + patch_size, top_left_x:top_left_x + patch_size, :] = 127.5
 
     return patched_image
@@ -25,11 +25,13 @@ def occultation(img, model, patch_size=32, sub_samp_for_step=4, pred_index=None)
         for top_left_y in range(0, img.shape[1], patch_size // sub_samp_for_step):
             patched_image = apply_grey_patch(img, top_left_x, top_left_y, patch_size)
 
-            list_for_predict = [patched_image]
-            patched_image_for_predict = np.array(list_for_predict)
-            predictions = model.predict(patched_image_for_predict, verbose=False)[0]
+            # list_for_predict = [patched_image]
+            # patched_image_for_predict = np.array(list_for_predict)
+            # predictions = model.predict(patched_image_for_predict, verbose=False)[0]
 
-            confidence = predictions[pred_index]
+            # confidence = predictions[pred_index]
+
+            confidence = 0.
             
             # Save confidence for this specific patched image in map
             sensitivity_map[top_left_y:top_left_y + patch_size, top_left_x:top_left_x + patch_size] \
