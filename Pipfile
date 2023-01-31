@@ -16,7 +16,6 @@ opencv-python = "*"
 tensorflow = "*"
 autopep8 = "*"
 tensorflow-addons = "*"
-pydot = "*"
 
 [dev-packages]
 
