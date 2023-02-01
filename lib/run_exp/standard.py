@@ -56,6 +56,7 @@ def run_experiment(model,
         mode="max",
         min_delta=min_delta_lr,
         cooldown=0,
+        verbose=1,
     )
 
     card = ds_train.cardinality().numpy()
