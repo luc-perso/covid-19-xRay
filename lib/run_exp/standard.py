@@ -8,6 +8,7 @@ def run_experiment(model,
                   learning_rate=1e-3, weight_decay=1e-4,
                   from_logits=False, label_smoothing=0.1,
                   patience=5, min_delta=0.005,
+                  patience_lr=2, min_delta_lr=0.005, factor_lr=0.1,
                   log_path=None, ckpt_path=None,
                   prefix='transformer'):
     optimizer = tfa.optimizers.AdamW(
@@ -48,6 +49,14 @@ def run_experiment(model,
         min_delta=min_delta,
         mode='max'
     )
+    custom_reduce_lr_on_plateau = keras.callbacks.ReduceLROnPlateau(
+        monitor="accuracy",
+        factor=factor_lr,
+        patience=patience_lr,
+        mode="max",
+        min_delta=min_delta_lr,
+        cooldown=0,
+    )
 
     card = ds_train.cardinality().numpy()
     ds_shuffle = ds_train.shuffle(card, reshuffle_each_iteration=True)
@@ -56,7 +65,7 @@ def run_experiment(model,
         batch_size=batch_size,
         epochs=num_epochs,
         validation_data=ds_valid.batch(batch_size),
-        callbacks=[log, checkpoint_callback, custom_early_stopping],
+        callbacks=[log, checkpoint_callback, custom_early_stopping, custom_reduce_lr_on_plateau],
     )
 
     return history
