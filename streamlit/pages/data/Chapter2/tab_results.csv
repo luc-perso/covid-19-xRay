@@ -1,0 +1,16 @@
+,,F1 score after first 10 epochs,F1 score after first 10 epochs,F1 score after first 10 epochs,F1 score after first 10 epochs,F1 score after second 10 epochs,F1 score after second 10 epochs,F1 score after second 10 epochs,F1 score after second 10 epochs
+,,COVID-19,Non-COVID,Normal,acc,COVID-19,Non-COVID,Normal,acc
+not_masked,Linear1,0.8,0.68,0.74,0.75,0.95,0.77,0.78,0.86
+not_masked,Linear2,0.94,0.77,0.76,0.85,0.95,0.77,0.79,0.86
+not_masked,Linear3,0.92,0.73,0.75,0.83,0.94,0.76,0.78,0.85
+not_masked,VGG16,0.93,0.83,0.86,0.88,0.95,0.83,0.87,0.9
+not_masked,ResNet101,0.98,0.87,0.9,0.93,0.98,0.87,0.9,0.93
+not_masked,Xception,0.92,0.79,0.78,0.85,0.94,0.8,0.83,0.87
+not_masked,InceptionV3,0.84,0.7,0.73,0.79,0.94,0.79,0.79,0.86
+masked,Linear1,0.82,0.58,0.75,0.76,0.87,0.71,0.77,0.81
+masked,Linear2,0.85,0.71,0.76,0.79,0.81,0.67,0.72,0.75
+masked,Linear3,0.75,0.53,0.68,0.68,0.74,0.54,0.7,0.68
+masked,VGG16, 0.90,0.79,0.86,0.86,0.91,0.78,0.84, 0.86
+masked,ResNet101,0.9,0.73,0.87,0.86,0.95,0.81,0.82,0.88
+masked,Xception,0.88,0.72,0.82,0.82,0.9,0.75,0.85,0.85
+masked,InceptionV3,0.9,0.74,0.79,0.84,0.9,0.75,0.82,0.84
