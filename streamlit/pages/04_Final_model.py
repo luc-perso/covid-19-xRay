@@ -9,12 +9,12 @@ import streamlit as st
 import os
 from PIL import Image
 #__________________________________ SIDEBAR ________________________________________
-st.sidebar.markdown("# CNN-Autoencoder-ViT")
+st.sidebar.markdown("# Final Model")
 
 #__________________________________ PAGE CONTENT ________________________________________
 root = os.path.dirname(os.path.realpath(__file__))
 
-st.markdown("# CNN-Autoencoder-ViT")
+st.markdown("# Final Model")
 st.markdown("""
 ## Introduction
 <div style="text-align: justify;">
