@@ -55,8 +55,8 @@ st.text("\n"
          "\n"
          "\n") 
 st.markdown("## Data Exploration ")
-st.markdown("#### Histogram Equalisation ")
-st.markdown("We applied the histogram equalisation to improve the contrast of the images. Its function distributes effectively the apparent contrast perceived in an image")
+st.markdown("#### Histogram Equalization ")
+st.markdown("We applied the histogram equalization to improve the contrast of the images. Its function distributes effectively the apparent contrast perceived in an image")
 
 image= Image.open(os.path.join(root+ r'/pages/data/Introduction/oneXray.png'))
          # 700, 600)
@@ -90,7 +90,7 @@ st.text("\n"
          "\n"
          "\n") 
 st.markdown("#### Data Variation")
-st.markdown("To determine and explaine the variation in the data, we measured the eigenvectors of the Principal component analysis (PCA) to explains as much as possible of the total variation in the data set with the fewest possible PC")
+st.markdown("To determine and explaine the variation in the data, we measured the eigenvectors of the Principal component analysis (PCA) to explain as much as possible of the total variation in the data set with the fewest possible PCs")
 
 image= Image.open(os.path.join(root+ r'/pages/data/Introduction/EigenVector.png'))
          # 700, 600)
@@ -112,7 +112,7 @@ st.text("\n"
          "\n"
          "\n") 
 st.markdown("#### Clustering")
-st.markdown("Using 10 clusters, We analyse the distribution of the classes using the first 2 principle components;")
+st.markdown("Using 10 clusters, We analyse the distribution of the cases using the first 2 principle components;")
 st.markdown("- Diseases: It shows that no classes are really discriminate for isolating one of our target label")
 st.markdown("- Data sets: It shows that the probability distribution of the clusters is a little bit dissimilar between the dataset")
 
